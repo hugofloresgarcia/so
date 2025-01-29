@@ -3,6 +3,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 import argbind
+import shutil
 
 from pythonosc.osc_server import ThreadingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
@@ -69,7 +70,7 @@ class ParamManager:
             return {name: param.value for name, param in self._params.items()}
 
 
-class VampNetOSCManager:
+class OSCManager:
 
     def __init__(
         self, 
@@ -92,11 +93,6 @@ class VampNetOSCManager:
 
         print(f"will send to {ip}:{s_port}")
         self.client = SimpleUDPClient(ip, s_port)
-
-        # dispatch a hello message
-        print(f"sending hello message...")
-        self.client.send_message("/hello",["Hello from VampNet"])
-        self.client.send_message("/hello", [6., -2.])
 
 
     def start_server(self,):
@@ -134,6 +130,9 @@ class VampNetOSCManager:
 
     def error(self, msg: str):
         self.client.send_message("/error", msg)
+
+    def log(self, msg: str):
+        self.client.send_message("/log", msg)
         
 
 class GradioS2SSystem:
@@ -143,7 +142,7 @@ class GradioS2SSystem:
         ip: str,
         s_port: int, r_port: int,
     ):
-        self.osc_manager = VampNetOSCManager(
+        self.osc_manager = OSCManager(
             ip=ip, s_port=s_port, r_port=r_port, 
             process_fn=self.process, 
             param_change_callback=self.param_changed
@@ -152,6 +151,10 @@ class GradioS2SSystem:
         
         # TODO: cross check API versions with the osc manager!!!
         self.client = Client(src=url, download_files=".gradio")
+
+        self.batch_size = 4 # TODO: automatically get batch size from client. 
+
+        self.osc_manager.log("hello from gradio client!")
 
     def param_changed(self, param_name, new_value):
         print(f"Parameter {param_name} changed to {new_value}")
@@ -163,7 +166,7 @@ class GradioS2SSystem:
         print(f"Processing {address} with args {args}")
         # get the path to audio
         query_id = args[0]
-        audio_path = Path("audio/") / args[1]
+        audio_path = Path(args[1])
         text_prompt = args[2]
 
         # make sure it exists, otherwise send an error message
@@ -176,39 +179,47 @@ class GradioS2SSystem:
         result = self.client.predict(
                 text_prompt=text_prompt,
                 control_audio=handle_file(audio_path),
-                seed=3,
-                median_filter_length=0,
+                seed=query_id,
+                median_filter_length=7,
                 normalize_db=-16,
                 duration=0,
-                params_str="{   'guidance_scale': 3.0,\
-                    'logsnr_max': 5.0,\
-                    'logsnr_min': -8,\
-                    'num_seconds': 5,\
-                    'num_steps': 24,\
-                    'rho': 7.0,\
-                    'sampler': 'dpmpp-2m-sde',\
-                    'schedule': 'karras'}",
+                params_str="""{   'guidance_scale': 3.0,
+                    'logsnr_max': 5.0,
+                    'logsnr_min': -8,
+                    'num_seconds': 5,
+                    'num_steps': 24,
+                    'rho': 7.0,
+                    'sampler': 'dpmpp-2m-sde',
+                    'schedule': 'karras'}""",
                 api_name="/generate_with_params"
         )
-        breakpoint() # we are probably expecting multiple files here
+        audio_files = list(result[:self.batch_size])
+        # if each file is missing a .wav at the end, add it 
+        first_audio = audio_files[0]
+        if not first_audio.endswith(".wav"):
+            for audio_file in audio_files:
+                shutil.move(audio_file, f"{audio_file}.wav")
+            audio_files = [f"{audio}.wav" for audio in audio_files]
+        seed = result[-1]
 
         timer.tock("predict")
 
         # send a message that the process is done
-        self.client.send_message("/log", f"File {outpath} has been vamped")
-        self.client.send_message("/process-result", outpath)
+        self.osc_manager.log(f"query {query_id} has been processed")
+        self.osc_manager.client.send_message("/process-result", [query_id] + audio_files)
 
 
 def create_param_manager():
     pm = ParamManager()
+    # text prompt
     return pm
 
 
-def gradio_main(url: str="https://f6c1ed2f544f62ee13.gradio.live/"):
+def gradio_main(url: str="https://948e1c3f450de21650.gradio.live/"):
 
     system = GradioS2SSystem(
         url=url,
-        ip="localhost", s_port=8002, r_port=8001,
+        ip="127.0.0.1", s_port=8003, r_port=8001,
     )
 
     system.osc_manager.start_server()
