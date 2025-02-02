@@ -70,6 +70,7 @@ class ParamManager:
             return {name: param.value for name, param in self._params.items()}
 
 
+
 class OSCManager:
 
     def __init__(
@@ -104,6 +105,11 @@ class OSCManager:
             dispatcher.map(f"/{param_name}", self._osc_set_param(param_name))
 
         dispatcher.map("/get_params", self._osc_get_params)
+
+        def send_heartbeat(_, *args):
+            # print("Received heartbeat")
+            self.client.send_message("/heartbeat", "pong")
+        dispatcher.map("/heartbeat", lambda a, *r: send_heartbeat(a, *r))
 
         dispatcher.set_default_handler(lambda a, *r: print(a, r))
 
@@ -152,9 +158,11 @@ class GradioS2SSystem:
         # TODO: cross check API versions with the osc manager!!!
         self.client = Client(src=url, download_files=".gradio")
 
-        self.batch_size = 4 # TODO: automatically get batch size from client. 
+        self.batch_size = 2# TODO: automatically get batch size from client. 
 
         self.osc_manager.log("hello from gradio client!")
+
+    
 
     def param_changed(self, param_name, new_value):
         print(f"Parameter {param_name} changed to {new_value}")
@@ -164,10 +172,18 @@ class GradioS2SSystem:
             raise ValueError(f"Unknown address {address}")
 
         print(f"Processing {address} with args {args}")
-        # get the path to audio
+        # unpack the args
         query_id = args[0]
         audio_path = Path(args[1])
         text_prompt = args[2]
+        use_control = bool(args[3])
+        looplength = args[4]
+        guidance_scale = args[5]
+        seed = args[6]
+
+        # import vampnet.dsp.signal as sn
+        # sig = sn.read_from_file(audio_path, duration=looplength / 1000.)
+        # sn.write(sig, audio_path)
 
         # make sure it exists, otherwise send an error message
         if not audio_path.exists():
@@ -175,30 +191,49 @@ class GradioS2SSystem:
             self.osc_manager.error(f"File {audio_path} does not exist")
             return
 
-        timer.tick("predict")
-        result = self.client.predict(
-                text_prompt=text_prompt,
-                control_audio=handle_file(audio_path),
-                seed=query_id,
-                median_filter_length=7,
-                normalize_db=-16,
-                duration=0,
-                params_str="""{   'guidance_scale': 3.0,
+        import json
+        params = {  'guidance_scale': guidance_scale,
                     'logsnr_max': 5.0,
                     'logsnr_min': -8,
-                    'num_seconds': 5,
+                    'num_seconds': looplength / 1000.,
                     'num_steps': 24,
                     'rho': 7.0,
                     'sampler': 'dpmpp-2m-sde',
-                    'schedule': 'karras'}""",
+                    'schedule': 'karras'
+        }
+
+        timer.tick("predict")
+        # NEW API
+        result = self.client.predict(
+                text_prompt=text_prompt,
+                control_audio=handle_file(audio_path) if use_control else None,
+                seed=seed,
+                median_filter_length=5,
+                normalize_db=-16,
+                duration=looplength / 1000.,
+                params_str=json.dumps(params),
                 api_name="/generate_with_params"
         )
+        # result = self.client.predict(
+        #         input_audio=handle_file(audio_path),
+        #         seed=query_id,
+        #         caption=text_prompt,
+        #         num_steps=100,
+        #         cfg_t_low=1,
+        #         cfg_t_high=-1,
+        #         text_guidance_scale=3,
+        #         ctrl_guidance_scale=1 if use_control else 0,
+        #         periodic_prompt=periodic_prompt,
+        #         api_name="/generate_periodic_prompt"
+        # )
+        # breakpoint()
         audio_files = list(result[:self.batch_size])
         # if each file is missing a .wav at the end, add it 
         first_audio = audio_files[0]
         if not first_audio.endswith(".wav"):
-            for audio_file in audio_files:
-                shutil.move(audio_file, f"{audio_file}.wav")
+            for audio_file in set(audio_files):
+                if not audio_file.endswith(".wav"):
+                    shutil.move(audio_file, f"{audio_file}.wav")
             audio_files = [f"{audio}.wav" for audio in audio_files]
         seed = result[-1]
 
@@ -215,7 +250,7 @@ def create_param_manager():
     return pm
 
 
-def gradio_main(url: str="https://948e1c3f450de21650.gradio.live/"):
+def gradio_main(url: str="http://localhost:7860/"):
 
     system = GradioS2SSystem(
         url=url,
@@ -226,9 +261,8 @@ def gradio_main(url: str="https://948e1c3f450de21650.gradio.live/"):
 
 
 if __name__ == "__main__":
-    args = argbind.parse_args()
-
     gradio_main = argbind.bind(gradio_main, without_prefix=True)
 
+    args = argbind.parse_args()
     with argbind.scope(args):
         gradio_main()
