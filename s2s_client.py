@@ -204,7 +204,7 @@ class GradioS2SSystem:
 
         timer.tick("predict")
         # NEW API
-        result = self.client.predict(
+        job = self.client.submit(
                 text_prompt=text_prompt,
                 control_audio=handle_file(audio_path) if use_control else None,
                 seed=seed,
@@ -214,6 +214,12 @@ class GradioS2SSystem:
                 params_str=json.dumps(params),
                 api_name="/generate_with_params"
         )
+
+        while not job.done():
+            time.sleep(0.1)
+            self.osc_manager.client.send_message("/progress", [query_id, str(job.status().code)])
+
+        result = job.result()
         # result = self.client.predict(
         #         input_audio=handle_file(audio_path),
         #         seed=query_id,
