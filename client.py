@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 import argbind
 import shutil
+import json
 
 from pythonosc.osc_server import ThreadingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
@@ -141,12 +142,13 @@ class OSCManager:
         self.client.send_message("/log", msg)
         
 
-class GradioS2SSystem:
+class GradioOSCClient:
 
     def __init__(self, 
-        url: str,
         ip: str,
         s_port: int, r_port: int,
+        vampnet_url: str = None,
+        s2s_url: str = None,
     ):
         self.osc_manager = OSCManager(
             ip=ip, s_port=s_port, r_port=r_port, 
@@ -154,32 +156,114 @@ class GradioS2SSystem:
             param_change_callback=self.param_changed
         )
         self.pm = self.osc_manager.pm
-        
-        # TODO: cross check API versions with the osc manager!!!
-        self.client = Client(src=url, download_files=".gradio")
+
+        self.clients = {}
+        if vampnet_url is not None:
+            self.clients["vampnet"] = Client(src=vampnet_url, download_files=".gradio")
+        if s2s_url is not None:
+            self.clients["s2s"] = Client(src=s2s_url, download_files=".gradio")
+        assert len(self.clients) > 0, "At least one client must be specified!"
 
         self.batch_size = 2# TODO: automatically get batch size from client. 
 
         self.osc_manager.log("hello from gradio client!")
 
-    
-
     def param_changed(self, param_name, new_value):
         print(f"Parameter {param_name} changed to {new_value}")
+
+    def vampnet_process(self, address: str, *args):
+        client = self.clients["vampnet"]
+
+        # query id --- audiofile ---- model_choice --- periodic --- drop --- seed 
+        query_id = args[0]
+        client_type = args[1]
+        audio_path = Path(args[2])
+        model_choice = args[3]
+        periodic_p = args[4]
+        dropout = args[5]
+        seed = args[6]
+
+        if not audio_path.exists():
+            print(f"File {audio_path} does not exist")
+            self.osc_manager.error(f"File {audio_path} does not exist")
+            return
+
+        timer.tick("predict")
+        print(f"Processing {address} with args {args}")
+        job = client.submit(
+            input_audio=handle_file(audio_path),
+            sampletemp=1,
+            top_p=0,
+            periodic_p=periodic_p,
+            periodic_w=1,
+            dropout=dropout,
+            stretch_factor=1,
+            onset_mask_width=5,
+            typical_filtering=True,
+            typical_mass=0.15,
+            typical_min_tokens=64,
+            seed=seed,
+            model_choice=model_choice,
+            n_mask_codebooks=3,
+            pitch_shift_amt=0,
+            sample_cutoff=1,
+            api_name="/vamp_1"
+        )
+
+        while not job.done():
+            time.sleep(0.1)
+            self.osc_manager.client.send_message("/progress", [query_id, str(job.status().code)])
+
+        result = job.result()
+        audio_file = result
+        audio_files = [audio_file] * self.batch_size
+        # audio_files = list(result[:self.batch_size])
+        # if each file is missing a .wav at the end, add it 
+        first_audio = audio_files[0]
+        if not first_audio.endswith(".wav"):
+            for audio_file in set(audio_files):
+                if not audio_file.endswith(".wav"):
+                    shutil.move(audio_file, f"{audio_file}.wav")
+            audio_files = [f"{audio}.wav" for audio in audio_files]
+        seed = result[-1]
+
+        timer.tock("predict")
+
+        # send a message that the process is done
+        self.osc_manager.log(f"query {query_id} has been processed")
+        self.osc_manager.client.send_message("/process-result", [query_id] + audio_files)
+
     
     def process(self, address: str, *args):
+        query_id = args[0]
+        client_type = args[1]
+        audio_path = Path(args[2])
+
+        if client_type == "vampnet":
+            self.vampnet_process(address, *args)
+            return
+        elif client_type == "sketch2sound":
+            self.process_s2s(address, *args)
+            return
+        else:
+            raise ValueError(f"Unknown client type {client_type}")
+        
+    def process_s2s(self, address: str, *args):
+        client = self.clients["s2s"]
+
         if address != "/process":
             raise ValueError(f"Unknown address {address}")
 
         print(f"Processing {address} with args {args}")
         # unpack the args
         query_id = args[0]
-        audio_path = Path(args[1])
-        text_prompt = args[2]
-        use_control = bool(args[3])
-        looplength = args[4]
-        guidance_scale = args[5]
-        seed = args[6]
+        client_type = args[1]
+        audio_path = Path(args[2])
+        text_prompt = args[3]
+        use_control = bool(args[4])
+        looplength = args[5]
+        guidance_scale = args[6]
+        seed = args[7]
 
         # import vampnet.dsp.signal as sn
         # sig = sn.read_from_file(audio_path, duration=looplength / 1000.)
@@ -191,8 +275,10 @@ class GradioS2SSystem:
             self.osc_manager.error(f"File {audio_path} does not exist")
             return
 
-        import json
-        params = {  'guidance_scale': guidance_scale,
+        
+        params = {  
+                    'control_guidance_scale': 1.0,
+                    'guidance_scale': guidance_scale,
                     'logsnr_max': 5.0,
                     'logsnr_min': -8,
                     'num_seconds': looplength / 1000.,
@@ -204,7 +290,7 @@ class GradioS2SSystem:
 
         timer.tick("predict")
         # NEW API
-        job = self.client.submit(
+        job = client.submit(
                 text_prompt=text_prompt,
                 control_audio=handle_file(audio_path) if use_control else None,
                 seed=seed,
@@ -220,19 +306,6 @@ class GradioS2SSystem:
             self.osc_manager.client.send_message("/progress", [query_id, str(job.status().code)])
 
         result = job.result()
-        # result = self.client.predict(
-        #         input_audio=handle_file(audio_path),
-        #         seed=query_id,
-        #         caption=text_prompt,
-        #         num_steps=100,
-        #         cfg_t_low=1,
-        #         cfg_t_high=-1,
-        #         text_guidance_scale=3,
-        #         ctrl_guidance_scale=1 if use_control else 0,
-        #         periodic_prompt=periodic_prompt,
-        #         api_name="/generate_periodic_prompt"
-        # )
-        # breakpoint()
         audio_files = list(result[:self.batch_size])
         # if each file is missing a .wav at the end, add it 
         first_audio = audio_files[0]
@@ -256,10 +329,13 @@ def create_param_manager():
     return pm
 
 
-def gradio_main(url: str="http://localhost:7860/"):
-
-    system = GradioS2SSystem(
-        url=url,
+def gradio_main(
+    s2s_url: str = None, 
+    vampnet_url: str = None
+):
+    system = GradioOSCClient(
+        vampnet_url=vampnet_url,
+        s2s_url=s2s_url,
         ip="127.0.0.1", s_port=8003, r_port=8001,
     )
 
