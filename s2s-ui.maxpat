@@ -2,17 +2,42 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 9,
-			"minor" : 0,
-			"revision" : 4,
+			"major" : 8,
+			"minor" : 6,
+			"revision" : 5,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
 		"rect" : [ 59.0, 106.0, 1000.0, 780.0 ],
+		"bglocked" : 0,
 		"openinpresentation" : 1,
+		"default_fontsize" : 12.0,
+		"default_fontface" : 0,
+		"default_fontname" : "Arial",
+		"gridonopen" : 1,
 		"gridsize" : [ 15.0, 15.0 ],
+		"gridsnaponopen" : 1,
+		"objectsnaponopen" : 1,
+		"statusbarvisible" : 2,
+		"toolbarvisible" : 1,
+		"lefttoolbarpinned" : 0,
+		"toptoolbarpinned" : 0,
+		"righttoolbarpinned" : 0,
+		"bottomtoolbarpinned" : 0,
+		"toolbars_unpinned_last_save" : 0,
+		"tallnewobj" : 0,
+		"boxanimatetime" : 200,
+		"enablehscroll" : 1,
+		"enablevscroll" : 1,
+		"devicewidth" : 0.0,
+		"description" : "",
+		"digest" : "",
+		"tags" : "",
+		"style" : "",
+		"subpatcher_template" : "",
+		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-9",
@@ -159,8 +184,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 881.739436268806458, 145.774649798870087, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 62.0, 85.0, 14.61988240480423, 14.61988240480423 ],
-					"svg" : ""
+					"presentation_rect" : [ 62.0, 85.0, 14.61988240480423, 14.61988240480423 ]
 				}
 
 			}
@@ -281,7 +305,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 667.0, 363.0, 51.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 166.0, 66.0, 33.0, 22.0 ]
+					"presentation_rect" : [ 142.0, 85.0, 33.0, 22.0 ]
 				}
 
 			}
@@ -307,7 +331,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 727.0, 358.0, 70.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 137.0, 46.0, 63.0, 20.0 ],
+					"presentation_rect" : [ 87.0, 86.0, 63.0, 20.0 ],
 					"text" : "guidance"
 				}
 
@@ -334,7 +358,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 455.0, 342.0, 55.0, 20.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 88.0, 46.0, 25.0, 20.0 ],
+					"presentation_rect" : [ 112.0, 61.597380716353655, 25.0, 20.0 ],
 					"text" : "ctrl"
 				}
 
@@ -349,8 +373,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 423.0, 346.0, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 88.0, 65.0, 19.506277497857809, 19.506277497857809 ],
-					"svg" : ""
+					"presentation_rect" : [ 142.0, 61.597380716353655, 19.506277497857809, 19.506277497857809 ]
 				}
 
 			}
@@ -393,8 +416,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 172.66680908203125, 182.087294161319733, 121.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 4.0, 20.0, 202.203639335930347, 24.193549454212189 ],
-					"text" : "bells",
+					"presentation_rect" : [ 4.0, 20.0, 171.0, 24.0 ],
 					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
 					"valuemode" : 1
 				}
@@ -692,8 +714,7 @@
 				}
 
 			}
- ],
-		"originid" : "pat-5243"
+ ]
 	}
 
 }

@@ -5,6 +5,7 @@ from pathlib import Path
 import argbind
 import shutil
 import json
+import audiotools as at
 
 from pythonosc.osc_server import ThreadingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
@@ -22,6 +23,7 @@ from tqdm import tqdm
 
 timer = vampnet.util.Timer()
 
+DOWNLOADS_DIR = ".gradio"
 
 @dataclass
 class Param:
@@ -159,9 +161,9 @@ class GradioOSCClient:
 
         self.clients = {}
         if vampnet_url is not None:
-            self.clients["vampnet"] = Client(src=vampnet_url, download_files=".gradio")
+            self.clients["vampnet"] = Client(src=vampnet_url, download_files=DOWNLOADS_DIR)
         if s2s_url is not None:
-            self.clients["s2s"] = Client(src=s2s_url, download_files=".gradio")
+            self.clients["s2s"] = Client(src=s2s_url, download_files=DOWNLOADS_DIR)
         assert len(self.clients) > 0, "At least one client must be specified!"
 
         self.batch_size = 2# TODO: automatically get batch size from client. 
@@ -182,11 +184,29 @@ class GradioOSCClient:
         periodic_p = args[4]
         dropout = args[5]
         seed = args[6]
+        looplength_ms = args[7]
+
 
         if not audio_path.exists():
             print(f"File {audio_path} does not exist")
             self.osc_manager.error(f"File {audio_path} does not exist")
             return
+
+        sig = at.AudioSignal(audio_path)
+
+        # grab the looplength only
+        # TODO: although I added this, 
+        # the max patch is still configured to crop anything past the looplength off
+        # so we'll have to change that in order to make an effect. 
+        end_sample = int(looplength_ms * sig.sample_rate / 1000)
+        sig.samples = sig.samples[..., :end_sample]
+
+        # grab  the remainder of the waveform
+        num_cut_samples = sig.samples.shape[-1] - end_sample
+        cut_wav = sig.samples[..., -num_cut_samples:]
+
+        # write the file back
+        sig.write(audio_path)
 
         timer.tick("predict")
         print(f"Processing {address} with args {args}")
@@ -224,7 +244,14 @@ class GradioOSCClient:
             for audio_file in set(audio_files):
                 if not audio_file.endswith(".wav"):
                     shutil.move(audio_file, f"{audio_file}.wav")
-            audio_files = [f"{audio}.wav" for audio in audio_files]
+                    audio_file = f"{audio_file}.wav"
+                
+                # load the file, add the cut samples back
+                sig = at.AudioSignal(audio_file)
+                sig.samples = torch.cat([sig.samples, cut_wav], dim=-1)
+                sig.write(audio_file)
+
+            audio_files = [f"{audio}.wav" for audio in audio_files if not audio.endswith(".wav")]
         seed = result[-1]
 
         timer.tock("predict")
@@ -264,6 +291,23 @@ class GradioOSCClient:
         looplength = args[5]
         guidance_scale = args[6]
         seed = args[7]
+
+        sig = at.AudioSignal(audio_path)
+        looplength_ms = looplength
+        # grab the looplength only
+        # TODO: although I added this, 
+        # the max patch is still configured to crop anything past the looplength off
+        # so we'll have to change that in order to make an effect. 
+        end_sample = int(looplength_ms * sig.sample_rate / 1000)
+        sig.samples = sig.samples[..., :end_sample]
+
+        # grab  the remainder of the waveform
+        num_cut_samples = sig.samples.shape[-1] - end_sample
+        cut_wav = sig.samples[..., -num_cut_samples:]
+
+        # write the file back
+        sig.write(audio_path)
+
 
         # import vampnet.dsp.signal as sn
         # sig = sn.read_from_file(audio_path, duration=looplength / 1000.)
