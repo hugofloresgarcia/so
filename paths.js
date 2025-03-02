@@ -1,4 +1,4 @@
-var pathModes = ["wander", "circle", "bounce"];
+var pathModes = ["off", "wander", "circle", "bounce"];
 
 // Define state object
 var state = {

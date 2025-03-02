@@ -25,6 +25,9 @@ timer = vampnet.util.Timer()
 
 DOWNLOADS_DIR = ".gradio"
 
+def clear_downloads():
+    shutil.rmtree(DOWNLOADS_DIR, ignore_errors=True)
+
 @dataclass
 class Param:
     name: str
@@ -347,9 +350,15 @@ class GradioOSCClient:
 
         while not job.done():
             time.sleep(0.1)
-            self.osc_manager.client.send_message("/progress", [query_id, str(job.status().code)])
+            status = str(job.status().code)
+
+            if "FINISHED" in status:
+                status = "STATUS.WAITING"
+        
+            self.osc_manager.client.send_message("/progress", [query_id, status])
 
         result = job.result()
+        self.osc_manager.client.send_message("/progress", [query_id, "STATUS.FINISHED"])
         timer.tock(f"predict-{query_id}")
         timer.tick(f"postprocess-{query_id}")
         audio_files = list(result[:self.batch_size])
@@ -395,8 +404,13 @@ def gradio_main(
 
 
 if __name__ == "__main__":
-    gradio_main = argbind.bind(gradio_main, without_prefix=True)
+    try:
+        gradio_main = argbind.bind(gradio_main, without_prefix=True)
 
-    args = argbind.parse_args()
-    with argbind.scope(args):
-        gradio_main()
+        args = argbind.parse_args()
+        with argbind.scope(args):
+            gradio_main()
+
+    except Exception as e:
+        import shutil
+        shutil.rmtree(DOWNLOADS_DIR, ignore_errors=True)
