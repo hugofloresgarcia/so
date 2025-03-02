@@ -2,42 +2,17 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 8,
-			"minor" : 6,
-			"revision" : 5,
+			"major" : 9,
+			"minor" : 0,
+			"revision" : 4,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
 		"rect" : [ 59.0, 106.0, 1000.0, 780.0 ],
-		"bglocked" : 0,
 		"openinpresentation" : 1,
-		"default_fontsize" : 12.0,
-		"default_fontface" : 0,
-		"default_fontname" : "Arial",
-		"gridonopen" : 1,
 		"gridsize" : [ 15.0, 15.0 ],
-		"gridsnaponopen" : 1,
-		"objectsnaponopen" : 1,
-		"statusbarvisible" : 2,
-		"toolbarvisible" : 1,
-		"lefttoolbarpinned" : 0,
-		"toptoolbarpinned" : 0,
-		"righttoolbarpinned" : 0,
-		"bottomtoolbarpinned" : 0,
-		"toolbars_unpinned_last_save" : 0,
-		"tallnewobj" : 0,
-		"boxanimatetime" : 200,
-		"enablehscroll" : 1,
-		"enablevscroll" : 1,
-		"devicewidth" : 0.0,
-		"description" : "",
-		"digest" : "",
-		"tags" : "",
-		"style" : "",
-		"subpatcher_template" : "",
-		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-9",
@@ -132,7 +107,7 @@
 					"patching_rect" : [ 505.92646598815918, 1144.0, 97.0, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 4.0, 4.0, 67.0, 20.0 ],
-					"text" : "text"
+					"text" : "prompt"
 				}
 
 			}
@@ -184,7 +159,8 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 881.739436268806458, 145.774649798870087, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 62.0, 85.0, 14.61988240480423, 14.61988240480423 ]
+					"presentation_rect" : [ 62.0, 85.0, 14.61988240480423, 14.61988240480423 ],
+					"svg" : ""
 				}
 
 			}
@@ -373,7 +349,8 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 423.0, 346.0, 24.0, 24.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 142.0, 61.597380716353655, 19.506277497857809, 19.506277497857809 ]
+					"presentation_rect" : [ 142.0, 61.597380716353655, 19.506277497857809, 19.506277497857809 ],
+					"svg" : ""
 				}
 
 			}
@@ -408,6 +385,7 @@
 					"fontsize" : 12.0,
 					"id" : "obj-310",
 					"keymode" : 1,
+					"linecount" : 2,
 					"maxclass" : "textedit",
 					"numinlets" : 1,
 					"numoutlets" : 4,
@@ -417,6 +395,7 @@
 					"patching_rect" : [ 172.66680908203125, 182.087294161319733, 121.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 4.0, 20.0, 171.0, 24.0 ],
+					"text" : "i don't know, surprise me",
 					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
 					"valuemode" : 1
 				}
@@ -714,7 +693,8 @@
 				}
 
 			}
- ]
+ ],
+		"originid" : "pat-493"
 	}
 
 }

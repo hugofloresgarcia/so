@@ -332,7 +332,7 @@ class GradioOSCClient:
                     'schedule': 'karras'
         }
 
-        timer.tick("predict")
+        timer.tick(f"predict-{query_id}")
         # NEW API
         job = client.submit(
                 text_prompt=text_prompt,
@@ -350,6 +350,8 @@ class GradioOSCClient:
             self.osc_manager.client.send_message("/progress", [query_id, str(job.status().code)])
 
         result = job.result()
+        timer.tock(f"predict-{query_id}")
+        timer.tick(f"postprocess-{query_id}")
         audio_files = list(result[:self.batch_size])
         # if each file is missing a .wav at the end, add it 
         first_audio = audio_files[0]
@@ -358,9 +360,15 @@ class GradioOSCClient:
                 if not audio_file.endswith(".wav"):
                     shutil.move(audio_file, f"{audio_file}.wav")
             audio_files = [f"{audio}.wav" for audio in audio_files]
+        
+        for audio_file in audio_files:
+            # load the file, add the cut samples back
+            sig = at.AudioSignal(audio_file)
+            sig = sig.to_mono()
+            sig.samples = torch.cat([sig.samples, cut_wav], dim=-1)
+            sig.write(audio_file)
         seed = result[-1]
-
-        timer.tock("predict")
+        timer.tock(f"postprocess-{query_id}")
 
         # send a message that the process is done
         self.osc_manager.log(f"query {query_id} has been processed")

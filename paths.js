@@ -1,60 +1,59 @@
-
-var pathMode = "wander";
 var pathModes = ["wander", "circle", "bounce"];
 
-var coords = [];
-var coordidx = 0;
+// Define state object
+var state = {
+    coords: [],
+    coordidx: 0,
+    mode: "off"
+};
 
 // the space ranges from -1 to 1 in x and y, z must always be 0
-
 function bang() {
-  // TODO: emit next xyz coordinate in path
-
-    if (coords.length > 0) {
-        outlet(0, coords[coordidx]);
-        coordidx = (coordidx + 1) % coords.length;
+    // TODO: emit next xyz coordinate in path
+    if (state.coords.length > 0 && state.mode !== "off") {
+        outlet(0, state.coords[state.coordidx]);
+        state.coordidx = (state.coordidx + 1) % state.coords.length;
     }
 }
 
 function setPath(mode) {
-    post(mode);
     if (pathModes.indexOf(mode) >= 0) {
-        pathMode = mode;
+        state.mode = mode;
     }
 
     // generate points for the path
-    switch (pathMode) {
+    switch (state.mode) {
         case "wander":
             // wander around in brownian motion
-            coords = [];
+            state.coords = [];
             var numPoints = Math.round(Math.random() * 100);
             var x = 0;
             var y = 0;
             for (var i = 0; i < numPoints; i++) {
-                x += Math.random() * 0.2 - 0.1 ; // TODO: this 0.1 controls wander amt
-                y += Math.random() * 0.2 - 0.1; 
+                x += Math.random() * 0.2 - 0.1; // TODO: this 0.1 controls wander amt
+                y += Math.random() * 0.2 - 0.1;
 
                 // clamp to -1 to 1
                 x = Math.min(1, Math.max(-1, x));
                 y = Math.min(1, Math.max(-1, y));
-                coords.push([x, y, 0]);
+                state.coords.push([x, y, 0]);
             }
             break;
         case "circle":
             // circle around in a random direction
-            coords = [];
-            var numPoints = Math.round(Math.random() * 100); 
+            state.coords = [];
+            var numPoints = Math.round(Math.random() * 100);
             var angle = Math.random() * 2 * Math.PI;
 
-            direction = Math.random() < 0.5 ? 1 : -1;
+            var direction = Math.random() < 0.5 ? 1 : -1;
             for (var i = 0; i < numPoints; i++) {
-                coords.push([Math.cos(angle), Math.sin(angle), 0]);
+                state.coords.push([Math.cos(angle), Math.sin(angle), 0]);
                 angle += 2 * Math.PI / numPoints * direction;
             }
             break;
         case "bounce":
             // bounce around two points
-            coords = [];
+            state.coords = [];
             var numPoints = 2;
             var x = 0;
             var y = 0;
@@ -72,25 +71,24 @@ function setPath(mode) {
             var y2 = y1 + distance * Math.sin(angle);
 
             // generate the path
-            coords.push([x1, y1, 0]);
-            coords.push([x2, y2, 0]);
-
-            break;
-        case "off":
-            coords = [];
+            state.coords.push([x1, y1, 0]);
+            state.coords.push([x2, y2, 0]);
             break;
         case "random":
-            coords = [];
+            state.coords = [];
             var numPoints = Math.round(Math.random() * 100);
             for (var i = 0; i < numPoints; i++) {
-                coords.push([Math.random() * 2 - 1, Math.random() * 2 - 1, 0]);
+                state.coords.push([Math.random() * 2 - 1, Math.random() * 2 - 1, 0]);
             }
-            break
+            break;
+        case "off":
+            // empty the coords
+            state.coords = [];
+            state.coordidx = 0;
+            break;
         default:
             post("unknown path mode");
             break;
-        
     }
-
+    post("coords length: " + state.coords.length);
 }
-
