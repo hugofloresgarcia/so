@@ -25,56 +25,10 @@ timer = vampnet.util.Timer()
 
 DOWNLOADS_DIR = ".gradio"
 
-def clear_downloads():
-    shutil.rmtree(DOWNLOADS_DIR, ignore_errors=True)
-
-@dataclass
-class Param:
-    name: str
-    value: any
-    param_type: type
-    range: tuple = None  # Optional range for validation
-    step: float = 0.1
-
-    def set_value(self, new_value):
-        if self.range and not (self.range[0] <= new_value <= self.range[1]):
-            raise ValueError(f"Value {new_value} for {self.name} is out of range {self.range}")
-        # quantize to step
-        new_value = round(new_value / self.step) * self.step
-        self.value = self.param_type(new_value)
-
-
-class ParamManager:
-    def __init__(self):
-        self._params = {}
-        self._lock = Lock()
-
-    def register(self, name, initial_value, param_type, range=None, **kwargs):
-        with self._lock:
-            if name in self._params:
-                raise ValueError(f"Parameter {name} already registered")
-            self._params[name] = Param(name, initial_value, param_type, range, **kwargs)
-
-    def set(self, name, value):
-        with self._lock:
-            if name not in self._params:
-                raise ValueError(f"Parameter {name} not registered")
-            self._params[name].set_value(value)
-
-    def get(self, name):
-        with self._lock:
-            if name not in self._params:
-                raise ValueError(f"Parameter {name} not registered")
-            return self._params[name].value
-
-    def asdict(self):
-        with self._lock:
-            return dict(self._params)
-
-    def list(self):
-        with self._lock:
-            return {name: param.value for name, param in self._params.items()}
-
+def clear_file(file):
+    file = Path(file)
+    if file.exists():
+        file.unlink()
 
 
 class OSCManager:
@@ -92,7 +46,7 @@ class OSCManager:
         self.r_port = r_port
 
         # register parameters
-        self.pm = create_param_manager()
+        # self.pm = create_param_manager()
         self.param_change_callback = param_change_callback
 
         # register the process_fn
@@ -106,16 +60,13 @@ class OSCManager:
         dispatcher = Dispatcher()
         dispatcher.map("/process", self.process_fn)
 
-        # connect params from manager to dispatcher
-        for param_name in self.pm.list().keys():
-            dispatcher.map(f"/{param_name}", self._osc_set_param(param_name))
-
-        dispatcher.map("/get_params", self._osc_get_params)
-
         def send_heartbeat(_, *args):
             # print("Received heartbeat")
             self.client.send_message("/heartbeat", "pong")
+
         dispatcher.map("/heartbeat", lambda a, *r: send_heartbeat(a, *r))
+
+        dispatcher.map("/cleanup", lambda a, *r: clear_file(r[0]))
 
         dispatcher.set_default_handler(lambda a, *r: print(a, r))
 
@@ -123,21 +74,21 @@ class OSCManager:
         print(f"Serving on {server.server_address}")
         server.serve_forever()
 
-    def _osc_set_param(self, param_name):
-        def handler(_, *args):
-            try:
-                self.pm.set(param_name, args[0])
-            except ValueError as e:
-                print(f"Error setting parameter {param_name}: {e}")
-            if self.param_change_callback:
-                self.param_change_callback(param_name, self.pm.get(param_name))
-            print(f"Set {param_name} to {self.pm.get(param_name)}")
-        return handler
+    # def _osc_set_param(self, param_name):
+    #     def handler(_, *args):
+    #         try:
+    #             self.pm.set(param_name, args[0])
+    #         except ValueError as e:
+    #             print(f"Error setting parameter {param_name}: {e}")
+    #         if self.param_change_callback:
+    #             self.param_change_callback(param_name, self.pm.get(param_name))
+    #         print(f"Set {param_name} to {self.pm.get(param_name)}")
+    #     return handler
 
-    def _osc_get_params(self, address, *args):
-        param_names = list(self.pm.list().keys())
-        print(f"Returning parameter names: {param_names}")
-        self.client.send_message("/params", ",".join(param_names))
+    # def _osc_get_params(self, address, *args):
+    #     param_names = list(self.pm.list().keys())
+    #     print(f"Returning parameter names: {param_names}")
+    #     self.client.send_message("/params", ",".join(param_names))
 
 
     def error(self, msg: str):
@@ -160,7 +111,7 @@ class GradioOSCClient:
             process_fn=self.process, 
             param_change_callback=self.param_changed
         )
-        self.pm = self.osc_manager.pm
+        # self.pm = self.osc_manager.pm
 
         self.clients = {}
         if vampnet_url is not None:
@@ -290,10 +241,11 @@ class GradioOSCClient:
         client_type = args[1]
         audio_path = Path(args[2])
         text_prompt = args[3]
-        use_control = bool(args[4])
+        use_control = args[4] == 1
         looplength = args[5]
         guidance_scale = args[6]
         seed = args[7]
+        median_filter_length = args[8]
 
         sig = at.AudioSignal(audio_path)
         looplength_ms = looplength
@@ -341,7 +293,7 @@ class GradioOSCClient:
                 text_prompt=text_prompt,
                 control_audio=handle_file(audio_path) if use_control else None,
                 seed=seed,
-                median_filter_length=5,
+                median_filter_length=median_filter_length,
                 normalize_db=-16,
                 duration=looplength / 1000.,
                 params_str=json.dumps(params),
@@ -384,10 +336,10 @@ class GradioOSCClient:
         self.osc_manager.client.send_message("/process-result", [query_id] + audio_files)
 
 
-def create_param_manager():
-    pm = ParamManager()
-    # text prompt
-    return pm
+# def create_param_manager():
+#     pm = ParamManager()
+#     # text prompt
+#     return pm
 
 
 def gradio_main(
