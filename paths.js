@@ -27,8 +27,11 @@ function setPath(mode) {
             // wander around in brownian motion
             state.coords = [];
             var numPoints = Math.round(Math.random() * 100);
-            var x = 0;
-            var y = 0;
+            // var x = 0;
+            // var y = 0;
+            // pick a random starting point within -1 and 1
+            var x = Math.random() * 2 - 1;
+            var y = Math.random() * 2 - 1;
             for (var i = 0; i < numPoints; i++) {
                 x += Math.random() * 0.2 - 0.1; // TODO: this 0.1 controls wander amt
                 y += Math.random() * 0.2 - 0.1;
@@ -57,18 +60,30 @@ function setPath(mode) {
             var numPoints = 2;
             var x = 0;
             var y = 0;
-            var maxDistance = 1.0;
-            var minDistance = 0.5;
+            
+            // pick two random quadrants to place the point in
+            quads = {
+                1: [1, 1],
+                2: [-1, 1],
+                3: [-1, -1],
+                4: [1, -1]
+            }
+            var quadindices = [1, 2, 3, 4];
+            // scramble quadindices 
+            quadindices.sort(function(a, b) { return Math.random() - 0.5; });
+            var quadidx1 = quadindices.pop();
+            var quadidx2 = quadindices.pop();
+            var quad1 = quads[quadidx1];
+            var quad2 = quads[quadidx2];
+            post("quad1: " + quad1 + " quad2: " + quad2);
 
-            // sample the two points
-            var x1 = Math.random() * 2 - 1;
-            var y1 = Math.random() * 2 - 1;
+            // pick point 1, a random point in the range (0, 1), then scale by the quad
+            var x1 = Math.random() * quad1[0];
+            var y1 = Math.random() * quad1[1];
 
-            // find the second point using a min max distance and a random angle
-            var angle = Math.random() * 2 * Math.PI;
-            var distance = Math.random() * (maxDistance - minDistance) + minDistance;
-            var x2 = x1 + distance * Math.cos(angle);
-            var y2 = y1 + distance * Math.sin(angle);
+            // pick point 2, a random point in the range (0, 1), then scale by the quad
+            var x2 = Math.random() * quad2[0];
+            var y2 = Math.random() * quad2[1];
 
             // generate the path
             state.coords.push([x1, y1, 0]);
@@ -76,7 +91,7 @@ function setPath(mode) {
             break;
         case "random":
             state.coords = [];
-            var numPoints = Math.round(Math.random() * 100);
+            var numPoints = Math.round(Math.random() * 100) + 2;
             for (var i = 0; i < numPoints; i++) {
                 state.coords.push([Math.random() * 2 - 1, Math.random() * 2 - 1, 0]);
             }

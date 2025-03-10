@@ -1,27 +1,33 @@
-from threading import Lock
 import time
-from dataclasses import dataclass
 from pathlib import Path
-import argbind
 import shutil
 import json
-import audiotools as at
 
+import argbind
+import audiotools as at
+from gradio_client import Client, handle_file
 from pythonosc.osc_server import ThreadingOSCUDPServer
 from pythonosc.udp_client import SimpleUDPClient
 from pythonosc.dispatcher import Dispatcher
-
-from gradio_client import Client, handle_file
-
 import torch
-import vampnet
-import vampnet.dsp.signal as sn
-from vampnet.mask import apply_mask
-from vampnet.train import VampNetTrainer
-from vampnet.util import Timer
-from tqdm import tqdm
 
-timer = vampnet.util.Timer()
+class Timer:
+    
+    def __init__(self):
+        self.times = {}
+    
+    def tick(self, name: str):
+        self.times[name] = time.time()
+    
+    def tock(self, name: str):
+        toc = time.time() - self.times[name]
+        print(f"{name} took {toc} seconds")
+        return toc
+    
+    def __str__(self):
+        return str(self.times)
+
+timer = Timer()
 
 DOWNLOADS_DIR = ".gradio"
 
@@ -39,15 +45,11 @@ class OSCManager:
         s_port: str, 
         r_port: str,
         process_fn: callable, 
-        param_change_callback: callable = None
+        # param_change_callback: callable = None
     ):
         self.ip = ip
         self.s_port = s_port
         self.r_port = r_port
-
-        # register parameters
-        # self.pm = create_param_manager()
-        self.param_change_callback = param_change_callback
 
         # register the process_fn
         self.process_fn = process_fn
@@ -74,23 +76,6 @@ class OSCManager:
         print(f"Serving on {server.server_address}")
         server.serve_forever()
 
-    # def _osc_set_param(self, param_name):
-    #     def handler(_, *args):
-    #         try:
-    #             self.pm.set(param_name, args[0])
-    #         except ValueError as e:
-    #             print(f"Error setting parameter {param_name}: {e}")
-    #         if self.param_change_callback:
-    #             self.param_change_callback(param_name, self.pm.get(param_name))
-    #         print(f"Set {param_name} to {self.pm.get(param_name)}")
-    #     return handler
-
-    # def _osc_get_params(self, address, *args):
-    #     param_names = list(self.pm.list().keys())
-    #     print(f"Returning parameter names: {param_names}")
-    #     self.client.send_message("/params", ",".join(param_names))
-
-
     def error(self, msg: str):
         self.client.send_message("/error", msg)
 
@@ -109,9 +94,7 @@ class GradioOSCClient:
         self.osc_manager = OSCManager(
             ip=ip, s_port=s_port, r_port=r_port, 
             process_fn=self.process, 
-            param_change_callback=self.param_changed
         )
-        # self.pm = self.osc_manager.pm
 
         self.clients = {}
         if vampnet_url is not None:
@@ -123,6 +106,7 @@ class GradioOSCClient:
         self.batch_size = 2# TODO: automatically get batch size from client. 
 
         self.osc_manager.log("hello from gradio client!")
+
 
     def param_changed(self, param_name, new_value):
         print(f"Parameter {param_name} changed to {new_value}")
@@ -262,11 +246,6 @@ class GradioOSCClient:
 
         # write the file back
         sig.write(audio_path)
-
-
-        # import vampnet.dsp.signal as sn
-        # sig = sn.read_from_file(audio_path, duration=looplength / 1000.)
-        # sn.write(sig, audio_path)
 
         # make sure it exists, otherwise send an error message
         if not audio_path.exists():

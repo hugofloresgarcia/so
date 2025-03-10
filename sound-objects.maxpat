@@ -40,6 +40,146 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-178",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 4,
+					"outlettype" : [ "signal", "signal", "signal", "signal" ],
+					"patching_rect" : [ 1520.467518150806427, 4676.0, 84.0, 22.0 ],
+					"text" : "mc.unpack~ 4"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-172",
+					"linecount" : 6,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1619.0, 488.0, 153.0, 87.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 3,
+					"presentation_rect" : [ 1185.0, 802.0, 352.0, 47.0 ],
+					"text" : "hugo: this could mean that I could make a flucoma-like sampler where I take the vocal imitations + \n- using the QuNeo?"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-169",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1067.0, 682.0, 155.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 816.000012159347534, 883.0, 280.999987840652466, 20.0 ],
+					"text" : "1 beat, 2 beat, 1 bar, 2 bar, etc. "
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-165",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1068.0, 635.0, 152.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 749.0, 863.5, 348.0, 20.0 ],
+					"text" : "TODO: change the names of loop for the TEMPO"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-134",
+					"linecount" : 2,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1294.0, 613.0, 153.0, 33.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 1141.0, 954.0, 330.0, 20.0 ],
+					"text" : "then do more think alouds, iterate again "
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-106",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1421.0, 520.0, 151.0, 47.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 1141.0, 916.0, 330.0, 33.0 ],
+					"text" : "do think alouds with the current interface, then make the next iteration"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-41",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1106.0, 488.0, 151.0, 47.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 1141.0, 893.0, 330.0, 20.0 ],
+					"text" : "PREP TO DO THE THINK ALOUD W BRYAN ON MONDAY"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-16",
+					"linecount" : 9,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1283.0, 480.0, 150.0, 127.0 ],
+					"presentation" : 1,
+					"presentation_linecount" : 4,
+					"presentation_rect" : [ 1130.0, 737.0, 352.0, 60.0 ],
+					"text" : "bryan would start off the performance with an audience participation moment where people record their sounds, then play it back for them -- then they would be arranged in into the performance? "
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-12",
+					"linecount" : 3,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1107.0, 569.0, 150.0, 47.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 749.0, 809.0, 348.0, 20.0 ],
+					"text" : "TODO: shift color palette between vampnet // sketch2sound"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-10",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 1503.0, 607.0, 150.0, 20.0 ],
+					"presentation" : 1,
+					"presentation_rect" : [ 749.0, 777.0, 150.0, 20.0 ],
+					"text" : "TODO: add ambicontrol!!!!"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-328",
 					"maxclass" : "newobj",
 					"numinlets" : 3,
@@ -714,7 +854,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1236.0, 868.0, 112.800001680850983, 20.0 ],
+					"patching_rect" : [ 1230.199998319149017, 869.0, 112.800001680850983, 20.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 279.0, 883.0, 112.800001680850983, 20.0 ],
 					"text" : "num objects"
@@ -730,10 +870,25 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
-					"parameter_enable" : 0,
+					"parameter_enable" : 1,
 					"patching_rect" : [ 1196.0, 868.0, 35.200000524520874, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 235.0, 881.0, 35.200000524520874, 22.0 ]
+					"presentation_rect" : [ 235.0, 881.0, 35.200000524520874, 22.0 ],
+					"saved_attribute_attributes" : 					{
+						"valueof" : 						{
+							"parameter_initial" : [ 4 ],
+							"parameter_initial_enable" : 1,
+							"parameter_longname" : "number",
+							"parameter_mmax" : 8.0,
+							"parameter_mmin" : 1.0,
+							"parameter_modmode" : 3,
+							"parameter_shortname" : "number",
+							"parameter_type" : 0
+						}
+
+					}
+,
+					"varname" : "number"
 				}
 
 			}
@@ -908,7 +1063,7 @@
 					"presentation_rect" : [ 1144.0, 1064.0, 68.055558800697327, 68.055558800697327 ],
 					"prototypename" : "small_light_grey",
 					"save_points" : 1,
-					"saved_points" : [ "1", 1, -0.5, 0.000000000000009, 0.0, -90.0, 0.0, 0.5, 0, 0.0, 0.0, 0.0, 0, 0, "2", 2, 0.5, 0.0, 0.0, 90.0, 0.0, 0.5, 0, 0.0, 0.0, 0.0, 0, 0 ],
+					"saved_points" : [ "1", 1, -0.353553390593269, 0.353553390593278, 0.0, -45.0, 0.0, 0.5, 0, 0.0, 0.0, 0.0, 0, 0, "2", 2, 0.353553390593275, 0.353553390593272, 0.0, 45.0, 0.0, 0.5, 0, 0.0, 0.0, 0.0, 0, 0, "3", 3, 0.353553390593275, -0.353553390593272, 0.0, 135.0, 0.0, 0.5, 0, 0.0, 0.0, 0.0, 0, 0, "4", 4, -0.353553390593282, -0.353553390593266, 0.0, -135.0, 0.0, 0.5, 0, 0.0, 0.0, 0.0, 0, 0 ],
 					"zoom_focal_point" : [ -0.016847816504613, 0.0, 0.0 ],
 					"zoom_scale" : 0.872153186517581
 				}
@@ -923,14 +1078,14 @@
 					"outlettype" : [ "multichannelsignal" ],
 					"patching_rect" : [ 1514.285699844360352, 4566.666623115539551, 120.0, 22.0 ],
 					"saved_object_attributes" : 					{
-						"active" : [ 1, 1 ],
+						"active" : [ 1, 1, 1, 1 ],
 						"gain" : 1.0,
 						"interpolation" : 1,
 						"order" : 6,
 						"rotate_order" : 0
 					}
 ,
-					"text" : "mc.ambidecode~ 6 2"
+					"text" : "mc.ambidecode~ 6 4"
 				}
 
 			}
@@ -992,10 +1147,10 @@
 				"box" : 				{
 					"id" : "obj-50",
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 1523.80950927734375, 4790.476144790649414, 74.0, 22.0 ],
-					"text" : "mc.dac~ 1 2"
+					"patching_rect" : [ 1523.80950927734375, 4790.476144790649414, 55.0, 22.0 ],
+					"text" : "dac~ 1 2"
 				}
 
 			}
@@ -1019,8 +1174,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1514.285699844360352, 4395.238053321838379, 225.0, 22.0 ],
-					"text" : "clear, aed 1 -90 0 0.5 1, aed 2 90 0 0.5 1"
+					"patching_rect" : [ 1514.285699844360352, 4395.238053321838379, 429.0, 22.0 ],
+					"text" : "clear, aed 1 -45 0 0.5 1, aed 2 45 0 0.5 1, aed 3 135 0 0.5 1, aed 4 -135 0 0.5 1"
 				}
 
 			}
@@ -1092,7 +1247,7 @@
 					"patching_rect" : [ 2809.523782730102539, 266.666664123535156, 150.0, 100.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 6,
-					"presentation_rect" : [ 384.0, 1308.0, 283.0, 87.0 ],
+					"presentation_rect" : [ 410.5, 1296.0, 283.0, 87.0 ],
 					"text" : "TODO: set the number of repeats before a loop switches\n- reloop after 1 bar\n- after 4\n-after 8\n etc. "
 				}
 
@@ -1108,7 +1263,7 @@
 					"patching_rect" : [ 2185.714264869689941, 261.904759407043457, 620.0, 47.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 4,
-					"presentation_rect" : [ 432.0, 1072.0, 240.0, 60.0 ],
+					"presentation_rect" : [ 410.5, 1092.0, 240.0, 60.0 ],
 					"text" : "TODO: panner stuff\n- path: circle, wander, random, jump, alternate\n- follow onsets toggle"
 				}
 
@@ -1139,7 +1294,7 @@
 					"patching_rect" : [ 399.999996185302734, 352.380949020385742, 620.0, 60.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 4,
-					"presentation_rect" : [ 432.0, 1472.0, 240.0, 60.0 ],
+					"presentation_rect" : [ 410.5, 1410.0, 240.0, 60.0 ],
 					"text" : "TODO!!\n-copy sketches between loopers\n-path shit\n-chatbot?"
 				}
 
@@ -1551,7 +1706,7 @@
 					"patching_rect" : [ 3770.085508286952972, 1052.136762797832489, 200.961545169353485, 87.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 4,
-					"presentation_rect" : [ 72.0, 1456.0, 340.0, 74.0 ],
+					"presentation_rect" : [ 72.0, 1456.0, 311.0, 74.0 ],
 					"text" : "sync stuff:\n\nper track should have\n- loop lengths: [auto, free, 1 measure, 2 measure, etc]\n"
 				}
 
@@ -2636,6 +2791,7 @@
 					"patching_rect" : [ 2533.333309173583984, 3166.66663646697998, 62.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 1196.0, 1200.0, 76.0, 18.0 ],
+					"text" : "default",
 					"textjustification" : 1
 				}
 
@@ -2761,6 +2917,7 @@
 					"clickthrough" : 0,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
+					"hidden" : 1,
 					"id" : "obj-85",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -2885,6 +3042,7 @@
 					"clickthrough" : 0,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
+					"hidden" : 1,
 					"id" : "obj-76",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -3009,6 +3167,7 @@
 					"clickthrough" : 0,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
+					"hidden" : 1,
 					"id" : "obj-58",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -3133,6 +3292,7 @@
 					"clickthrough" : 0,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
+					"hidden" : 1,
 					"id" : "obj-23",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
@@ -4913,7 +5073,7 @@
 					"outlettype" : [ "signal", "" ],
 					"patching_rect" : [ 257.142854690551758, 2133.33331298828125, 212.0, 700.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 2.0, 0.0, 194.0, 689.0 ],
+					"presentation_rect" : [ 6.363466873764992, 0.5, 194.0, 689.0 ],
 					"varname" : "obj-1",
 					"viewvisibility" : 1
 				}
@@ -5297,7 +5457,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-50", 0 ],
+					"destination" : [ "obj-178", 0 ],
 					"source" : [ "obj-166", 0 ]
 				}
 
@@ -5362,6 +5522,34 @@
 				"patchline" : 				{
 					"destination" : [ "obj-7", 0 ],
 					"source" : [ "obj-177", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-50", 0 ],
+					"source" : [ "obj-178", 3 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-50", 1 ],
+					"source" : [ "obj-178", 2 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-50", 0 ],
+					"source" : [ "obj-178", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-50", 1 ],
+					"source" : [ "obj-178", 0 ]
 				}
 
 			}
@@ -7006,7 +7194,6 @@
 			}
  ],
 		"parameters" : 		{
-			"obj-1302::obj-110" : [ "stretch[7]", "stretch", 0 ],
 			"obj-1302::obj-1124" : [ "dry/wet[8]", "morph", 0 ],
 			"obj-1302::obj-1125" : [ "level[1]", "level", 0 ],
 			"obj-1302::obj-1128" : [ "gain[1]", "gain", 0 ],
@@ -7025,7 +7212,9 @@
 			"obj-1302::obj-522" : [ "mc.live.gain~[1]", "grains", 0 ],
 			"obj-1302::obj-54" : [ "lpf", "lpf", 0 ],
 			"obj-1302::obj-55" : [ "tapelength", "length", 0 ],
+			"obj-1302::obj-581" : [ "speed", "speed", 0 ],
 			"obj-1302::obj-61" : [ "toggle", "toggle[19]", 0 ],
+			"obj-1302::obj-625" : [ "stretch[8]", "stretch", 0 ],
 			"obj-1302::obj-76" : [ "hpf", "hpf", 0 ],
 			"obj-1302::obj-91::obj-156" : [ "live.gain~[26]", "live.gain~", 0 ],
 			"obj-1302::obj-91::obj-162" : [ "live.gain~[25]", "live.gain~", 0 ],
@@ -7040,7 +7229,6 @@
 			"obj-232" : [ "gain-one[4]", "five", 0 ],
 			"obj-235" : [ "toggle[10]", "toggle[10]", 0 ],
 			"obj-238" : [ "gain-one[5]", "six", 0 ],
-			"obj-23::obj-110" : [ "stretch[3]", "stretch", 0 ],
 			"obj-23::obj-1124" : [ "dry/wet[2]", "morph", 0 ],
 			"obj-23::obj-1125" : [ "level[3]", "level", 0 ],
 			"obj-23::obj-1128" : [ "gain[3]", "gain", 0 ],
@@ -7059,7 +7247,9 @@
 			"obj-23::obj-522" : [ "mc.live.gain~[5]", "grains", 0 ],
 			"obj-23::obj-54" : [ "lpf[4]", "lpf", 0 ],
 			"obj-23::obj-55" : [ "tapelength[1]", "length", 0 ],
+			"obj-23::obj-581" : [ "speed[13]", "speed", 0 ],
 			"obj-23::obj-61" : [ "toggle[16]", "toggle[19]", 0 ],
+			"obj-23::obj-625" : [ "stretch[11]", "stretch", 0 ],
 			"obj-23::obj-76" : [ "hpf[4]", "hpf", 0 ],
 			"obj-23::obj-91::obj-156" : [ "live.gain~[10]", "live.gain~", 0 ],
 			"obj-23::obj-91::obj-162" : [ "live.gain~[14]", "live.gain~", 0 ],
@@ -7067,8 +7257,8 @@
 			"obj-244" : [ "gain-one[6]", "seven", 0 ],
 			"obj-247" : [ "toggle[12]", "toggle[12]", 0 ],
 			"obj-250" : [ "gain-one[7]", "eight", 0 ],
+			"obj-257" : [ "number", "number", 0 ],
 			"obj-399" : [ "click level", "click", 0 ],
-			"obj-3::obj-110" : [ "stretch[6]", "stretch", 0 ],
 			"obj-3::obj-1124" : [ "dry/wet[7]", "morph", 0 ],
 			"obj-3::obj-1125" : [ "level[8]", "level", 0 ],
 			"obj-3::obj-1128" : [ "gain[4]", "gain", 0 ],
@@ -7087,11 +7277,12 @@
 			"obj-3::obj-522" : [ "mc.live.gain~[8]", "grains", 0 ],
 			"obj-3::obj-54" : [ "lpf[1]", "lpf", 0 ],
 			"obj-3::obj-55" : [ "live.dial[1]", "length", 0 ],
+			"obj-3::obj-581" : [ "speed[16]", "speed", 0 ],
 			"obj-3::obj-61" : [ "toggle[13]", "toggle[19]", 0 ],
+			"obj-3::obj-625" : [ "stretch[14]", "stretch", 0 ],
 			"obj-3::obj-76" : [ "hpf[1]", "hpf", 0 ],
 			"obj-3::obj-91::obj-156" : [ "live.gain~[23]", "live.gain~", 0 ],
 			"obj-3::obj-91::obj-162" : [ "live.gain~[24]", "live.gain~", 0 ],
-			"obj-58::obj-110" : [ "stretch[2]", "stretch", 0 ],
 			"obj-58::obj-1124" : [ "dry/wet[3]", "morph", 0 ],
 			"obj-58::obj-1125" : [ "level[4]", "level", 0 ],
 			"obj-58::obj-1128" : [ "gain[6]", "gain", 0 ],
@@ -7110,11 +7301,12 @@
 			"obj-58::obj-522" : [ "mc.live.gain~[4]", "grains", 0 ],
 			"obj-58::obj-54" : [ "lpf[5]", "lpf", 0 ],
 			"obj-58::obj-55" : [ "tapelength[2]", "length", 0 ],
+			"obj-58::obj-581" : [ "speed[12]", "speed", 0 ],
 			"obj-58::obj-61" : [ "toggle[17]", "toggle[19]", 0 ],
+			"obj-58::obj-625" : [ "stretch[10]", "stretch", 0 ],
 			"obj-58::obj-76" : [ "hpf[5]", "hpf", 0 ],
 			"obj-58::obj-91::obj-156" : [ "live.gain~[12]", "live.gain~", 0 ],
 			"obj-58::obj-91::obj-162" : [ "live.gain~[13]", "live.gain~", 0 ],
-			"obj-5::obj-110" : [ "stretch[5]", "stretch", 0 ],
 			"obj-5::obj-1124" : [ "dry/wet[1]", "morph", 0 ],
 			"obj-5::obj-1125" : [ "level[2]", "level", 0 ],
 			"obj-5::obj-1128" : [ "gain[2]", "gain", 0 ],
@@ -7133,13 +7325,14 @@
 			"obj-5::obj-522" : [ "mc.live.gain~[7]", "grains", 0 ],
 			"obj-5::obj-54" : [ "lpf[2]", "lpf", 0 ],
 			"obj-5::obj-55" : [ "live.dial[2]", "length", 0 ],
+			"obj-5::obj-581" : [ "speed[15]", "speed", 0 ],
 			"obj-5::obj-61" : [ "toggle[14]", "toggle[19]", 0 ],
+			"obj-5::obj-625" : [ "stretch[13]", "stretch", 0 ],
 			"obj-5::obj-76" : [ "hpf[2]", "hpf", 0 ],
 			"obj-5::obj-91::obj-156" : [ "live.gain~[21]", "live.gain~", 0 ],
 			"obj-5::obj-91::obj-162" : [ "live.gain~[22]", "live.gain~", 0 ],
 			"obj-6" : [ "mc.live.gain~", "mc.live.gain~", 0 ],
 			"obj-73" : [ "gain-one", "one", 0 ],
-			"obj-76::obj-110" : [ "stretch[1]", "stretch", 0 ],
 			"obj-76::obj-1124" : [ "dry/wet[10]", "morph", 0 ],
 			"obj-76::obj-1125" : [ "level[5]", "level", 0 ],
 			"obj-76::obj-1128" : [ "gain[7]", "gain", 0 ],
@@ -7158,11 +7351,12 @@
 			"obj-76::obj-522" : [ "mc.live.gain~[3]", "grains", 0 ],
 			"obj-76::obj-54" : [ "lpf[6]", "lpf", 0 ],
 			"obj-76::obj-55" : [ "tapelength[3]", "length", 0 ],
+			"obj-76::obj-581" : [ "speed[11]", "speed", 0 ],
 			"obj-76::obj-61" : [ "toggle[18]", "toggle[19]", 0 ],
+			"obj-76::obj-625" : [ "stretch[9]", "stretch", 0 ],
 			"obj-76::obj-76" : [ "hpf[6]", "hpf", 0 ],
 			"obj-76::obj-91::obj-156" : [ "live.gain~[16]", "live.gain~", 0 ],
 			"obj-76::obj-91::obj-162" : [ "live.gain~[19]", "live.gain~", 0 ],
-			"obj-7::obj-110" : [ "stretch[4]", "stretch", 0 ],
 			"obj-7::obj-1124" : [ "dry/wet[9]", "morph", 0 ],
 			"obj-7::obj-1125" : [ "level[9]", "level", 0 ],
 			"obj-7::obj-1128" : [ "gain[5]", "gain", 0 ],
@@ -7181,17 +7375,18 @@
 			"obj-7::obj-522" : [ "mc.live.gain~[6]", "grains", 0 ],
 			"obj-7::obj-54" : [ "lpf[3]", "lpf", 0 ],
 			"obj-7::obj-55" : [ "live.dial[3]", "length", 0 ],
+			"obj-7::obj-581" : [ "speed[14]", "speed", 0 ],
 			"obj-7::obj-61" : [ "toggle[15]", "toggle[19]", 0 ],
+			"obj-7::obj-625" : [ "stretch[12]", "stretch", 0 ],
 			"obj-7::obj-76" : [ "hpf[3]", "hpf", 0 ],
 			"obj-7::obj-91::obj-156" : [ "live.gain~[15]", "live.gain~", 0 ],
 			"obj-7::obj-91::obj-162" : [ "live.gain~[20]", "live.gain~", 0 ],
-			"obj-85::obj-110" : [ "stretch", "stretch", 0 ],
 			"obj-85::obj-1124" : [ "morph", "morph", 0 ],
 			"obj-85::obj-1125" : [ "level[10]", "level", 0 ],
 			"obj-85::obj-1128" : [ "gain[8]", "gain", 0 ],
 			"obj-85::obj-1140" : [ "overdub[4]", "overdub", 0 ],
 			"obj-85::obj-117" : [ "live.drop[7]", "live.drop", 0 ],
-			"obj-85::obj-1230" : [ "speed[9]", "speed+", 0 ],
+			"obj-85::obj-1230" : [ "speed[10]", "speed+", 0 ],
 			"obj-85::obj-171" : [ "toggle[33]", "toggle[30]", 0 ],
 			"obj-85::obj-295" : [ "button[10]", "button[1]", 0 ],
 			"obj-85::obj-341" : [ "toggle[23]", "toggle[20]", 0 ],
@@ -7204,7 +7399,9 @@
 			"obj-85::obj-522" : [ "mc.live.gain~[2]", "grains", 0 ],
 			"obj-85::obj-54" : [ "lpf[7]", "lpf", 0 ],
 			"obj-85::obj-55" : [ "tapelength[4]", "length", 0 ],
+			"obj-85::obj-581" : [ "speed[9]", "speed", 0 ],
 			"obj-85::obj-61" : [ "toggle[19]", "toggle[19]", 0 ],
+			"obj-85::obj-625" : [ "stretch[7]", "stretch", 0 ],
 			"obj-85::obj-76" : [ "hpf[7]", "hpf", 0 ],
 			"obj-85::obj-91::obj-156" : [ "live.gain~[17]", "live.gain~", 0 ],
 			"obj-85::obj-91::obj-162" : [ "live.gain~[18]", "live.gain~", 0 ],
@@ -7218,10 +7415,6 @@
 			}
 ,
 			"parameter_overrides" : 			{
-				"obj-1302::obj-110" : 				{
-					"parameter_longname" : "stretch[7]"
-				}
-,
 				"obj-1302::obj-1124" : 				{
 					"parameter_longname" : "dry/wet[8]"
 				}
@@ -7270,6 +7463,17 @@
 					"parameter_shortname" : "length"
 				}
 ,
+				"obj-1302::obj-581" : 				{
+					"parameter_linknames" : 1,
+					"parameter_longname" : "speed",
+					"parameter_range" : [ 0.0125, 1.0 ],
+					"parameter_shortname" : "speed"
+				}
+,
+				"obj-1302::obj-625" : 				{
+					"parameter_longname" : "stretch[8]"
+				}
+,
 				"obj-1302::obj-76" : 				{
 					"parameter_longname" : "hpf",
 					"parameter_shortname" : "hpf"
@@ -7281,10 +7485,6 @@
 ,
 				"obj-1302::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[25]"
-				}
-,
-				"obj-23::obj-110" : 				{
-					"parameter_longname" : "stretch[3]"
 				}
 ,
 				"obj-23::obj-1124" : 				{
@@ -7331,6 +7531,14 @@
 					"parameter_longname" : "tapelength[1]"
 				}
 ,
+				"obj-23::obj-581" : 				{
+					"parameter_longname" : "speed[13]"
+				}
+,
+				"obj-23::obj-625" : 				{
+					"parameter_longname" : "stretch[11]"
+				}
+,
 				"obj-23::obj-76" : 				{
 					"parameter_longname" : "hpf[4]"
 				}
@@ -7341,10 +7549,6 @@
 ,
 				"obj-23::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[14]"
-				}
-,
-				"obj-3::obj-110" : 				{
-					"parameter_longname" : "stretch[6]"
 				}
 ,
 				"obj-3::obj-1124" : 				{
@@ -7383,6 +7587,14 @@
 					"parameter_longname" : "live.dial[1]"
 				}
 ,
+				"obj-3::obj-581" : 				{
+					"parameter_longname" : "speed[16]"
+				}
+,
+				"obj-3::obj-625" : 				{
+					"parameter_longname" : "stretch[14]"
+				}
+,
 				"obj-3::obj-76" : 				{
 					"parameter_longname" : "hpf[1]"
 				}
@@ -7393,10 +7605,6 @@
 ,
 				"obj-3::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[24]"
-				}
-,
-				"obj-58::obj-110" : 				{
-					"parameter_longname" : "stretch[2]"
 				}
 ,
 				"obj-58::obj-1124" : 				{
@@ -7443,6 +7651,14 @@
 					"parameter_longname" : "tapelength[2]"
 				}
 ,
+				"obj-58::obj-581" : 				{
+					"parameter_longname" : "speed[12]"
+				}
+,
+				"obj-58::obj-625" : 				{
+					"parameter_longname" : "stretch[10]"
+				}
+,
 				"obj-58::obj-76" : 				{
 					"parameter_longname" : "hpf[5]"
 				}
@@ -7453,10 +7669,6 @@
 ,
 				"obj-58::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[13]"
-				}
-,
-				"obj-5::obj-110" : 				{
-					"parameter_longname" : "stretch[5]"
 				}
 ,
 				"obj-5::obj-1124" : 				{
@@ -7504,6 +7716,14 @@
 					"parameter_longname" : "live.dial[2]"
 				}
 ,
+				"obj-5::obj-581" : 				{
+					"parameter_longname" : "speed[15]"
+				}
+,
+				"obj-5::obj-625" : 				{
+					"parameter_longname" : "stretch[13]"
+				}
+,
 				"obj-5::obj-76" : 				{
 					"parameter_longname" : "hpf[2]"
 				}
@@ -7514,10 +7734,6 @@
 ,
 				"obj-5::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[22]"
-				}
-,
-				"obj-76::obj-110" : 				{
-					"parameter_longname" : "stretch[1]"
 				}
 ,
 				"obj-76::obj-1124" : 				{
@@ -7564,6 +7780,14 @@
 					"parameter_longname" : "tapelength[3]"
 				}
 ,
+				"obj-76::obj-581" : 				{
+					"parameter_longname" : "speed[11]"
+				}
+,
+				"obj-76::obj-625" : 				{
+					"parameter_longname" : "stretch[9]"
+				}
+,
 				"obj-76::obj-76" : 				{
 					"parameter_longname" : "hpf[6]"
 				}
@@ -7574,10 +7798,6 @@
 ,
 				"obj-76::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[19]"
-				}
-,
-				"obj-7::obj-110" : 				{
-					"parameter_longname" : "stretch[4]"
 				}
 ,
 				"obj-7::obj-1124" : 				{
@@ -7624,6 +7844,14 @@
 					"parameter_longname" : "live.dial[3]"
 				}
 ,
+				"obj-7::obj-581" : 				{
+					"parameter_longname" : "speed[14]"
+				}
+,
+				"obj-7::obj-625" : 				{
+					"parameter_longname" : "stretch[12]"
+				}
+,
 				"obj-7::obj-76" : 				{
 					"parameter_longname" : "hpf[3]"
 				}
@@ -7634,15 +7862,6 @@
 ,
 				"obj-7::obj-91::obj-162" : 				{
 					"parameter_longname" : "live.gain~[20]"
-				}
-,
-				"obj-85::obj-110" : 				{
-					"parameter_initial" : 1.0,
-					"parameter_initial_enable" : 1,
-					"parameter_longname" : "stretch",
-					"parameter_range" : [ 0.0125, 1.5 ],
-					"parameter_shortname" : "stretch",
-					"parameter_unitstyle" : 1
 				}
 ,
 				"obj-85::obj-1124" : 				{
@@ -7669,7 +7888,7 @@
 				}
 ,
 				"obj-85::obj-1230" : 				{
-					"parameter_longname" : "speed[9]"
+					"parameter_longname" : "speed[10]"
 				}
 ,
 				"obj-85::obj-424::obj-347" : 				{
@@ -7692,6 +7911,14 @@
 				"obj-85::obj-55" : 				{
 					"parameter_longname" : "tapelength[4]",
 					"parameter_range" : [ 100.0, 10000.0 ]
+				}
+,
+				"obj-85::obj-581" : 				{
+					"parameter_longname" : "speed[9]"
+				}
+,
+				"obj-85::obj-625" : 				{
+					"parameter_longname" : "stretch[7]"
 				}
 ,
 				"obj-85::obj-76" : 				{
@@ -7755,34 +7982,6 @@
 					"flags" : 2
 				}
 ,
-				"level[3]" : 				{
-					"srcname" : "4.ctrl.0.chan.midi",
-					"min" : -70.0,
-					"max" : 6.0,
-					"flags" : 2
-				}
-,
-				"level[4]" : 				{
-					"srcname" : "5.ctrl.0.chan.midi",
-					"min" : -70.0,
-					"max" : 6.0,
-					"flags" : 2
-				}
-,
-				"level[5]" : 				{
-					"srcname" : "6.ctrl.0.chan.midi",
-					"min" : -70.0,
-					"max" : 6.0,
-					"flags" : 2
-				}
-,
-				"level[10]" : 				{
-					"srcname" : "7.ctrl.0.chan.midi",
-					"min" : -70.0,
-					"max" : 6.0,
-					"flags" : 2
-				}
-,
 				"toggle[2]" : 				{
 					"srcname" : "48.ctrl.0.chan.midi",
 					"min" : 0.0,
@@ -7836,6 +8035,90 @@
 					"srcname" : "55.ctrl.0.chan.midi",
 					"min" : 0.0,
 					"max" : 1.0,
+					"flags" : 2
+				}
+,
+				"lpf" : 				{
+					"srcname" : "4.ctrl.0.chan.midi",
+					"min" : 0.0,
+					"max" : 1.0,
+					"flags" : 2
+				}
+,
+				"lpf[1]" : 				{
+					"srcname" : "5.ctrl.0.chan.midi",
+					"min" : 0.0,
+					"max" : 1.0,
+					"flags" : 2
+				}
+,
+				"lpf[2]" : 				{
+					"srcname" : "6.ctrl.0.chan.midi",
+					"min" : 0.0,
+					"max" : 1.0,
+					"flags" : 2
+				}
+,
+				"lpf[3]" : 				{
+					"srcname" : "7.ctrl.0.chan.midi",
+					"min" : 0.0,
+					"max" : 1.0,
+					"flags" : 2
+				}
+,
+				"tapelength" : 				{
+					"srcname" : "16.ctrl.0.chan.midi",
+					"min" : 100.0,
+					"max" : 10000.0,
+					"flags" : 2
+				}
+,
+				"live.dial[1]" : 				{
+					"srcname" : "17.ctrl.0.chan.midi",
+					"min" : 100.0,
+					"max" : 10000.0,
+					"flags" : 2
+				}
+,
+				"live.dial[2]" : 				{
+					"srcname" : "18.ctrl.0.chan.midi",
+					"min" : 100.0,
+					"max" : 10000.0,
+					"flags" : 2
+				}
+,
+				"live.dial[3]" : 				{
+					"srcname" : "19.ctrl.0.chan.midi",
+					"min" : 100.0,
+					"max" : 10000.0,
+					"flags" : 2
+				}
+,
+				"speed[2]" : 				{
+					"srcname" : "20.ctrl.0.chan.midi",
+					"min" : -24.0,
+					"max" : 24.0,
+					"flags" : 2
+				}
+,
+				"speed[3]" : 				{
+					"srcname" : "21.ctrl.0.chan.midi",
+					"min" : -24.0,
+					"max" : 24.0,
+					"flags" : 2
+				}
+,
+				"speed[4]" : 				{
+					"srcname" : "22.ctrl.0.chan.midi",
+					"min" : -24.0,
+					"max" : 24.0,
+					"flags" : 2
+				}
+,
+				"speed[5]" : 				{
+					"srcname" : "23.ctrl.0.chan.midi",
+					"min" : -24.0,
+					"max" : 24.0,
 					"flags" : 2
 				}
 
@@ -7898,13 +8181,6 @@
 			}
 , 			{
 				"name" : "paths.js",
-				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects",
-				"patcherrelativepath" : ".",
-				"type" : "TEXT",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "pathtransform.js",
 				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
