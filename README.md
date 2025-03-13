@@ -10,9 +10,16 @@ conda activate unsound
 pip install -r requirements.txt
 ```
 
-(on your server, launch a gradio for the model)
+ssh into malleus
+```
+ssh bryan@malleus.cs.northwestern.edu -L 7860
+```
 
-then, launch the client
+(kindly ask hugo to launch the gradio on port 7860)
+
+you can verify that the gradio is running by opening `http://localhost:7860` on your browser
+
+then launch the client
 ```
 python client.py --s2s_url http://localhost:7860
 ```
