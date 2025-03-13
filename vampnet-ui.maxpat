@@ -112,16 +112,16 @@
 				"box" : 				{
 					"activedialcolor" : [ 0.6, 0.6, 0.6, 1.0 ],
 					"appearance" : 1,
-					"fontsize" : 12.0,
+					"fontsize" : 10.0,
 					"id" : "obj-349",
 					"maxclass" : "live.dial",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 489.313010931015015, 469.465681314468384, 49.618324041366577, 36.0 ],
+					"patching_rect" : [ 489.313010931015015, 469.465681314468384, 45.0, 36.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 123.270833075046539, 63.280995555222034, 36.0, 36.0 ],
+					"presentation_rect" : [ 88.622753381729126, 73.729166448116302, 33.0, 36.0 ],
 					"saved_attribute_attributes" : 					{
 						"activedialcolor" : 						{
 							"expression" : ""
@@ -135,7 +135,7 @@
 							"parameter_initial" : [ 0.0 ],
 							"parameter_initial_enable" : 1,
 							"parameter_linknames" : 1,
-							"parameter_longname" : "drop[7]",
+							"parameter_longname" : "drop",
 							"parameter_mmax" : 1.0,
 							"parameter_modmode" : 0,
 							"parameter_shortname" : "drop",
@@ -169,16 +169,16 @@
 				"box" : 				{
 					"activedialcolor" : [ 0.6, 0.6, 0.6, 1.0 ],
 					"appearance" : 1,
-					"fontsize" : 12.0,
+					"fontsize" : 10.0,
 					"id" : "obj-347",
 					"maxclass" : "live.dial",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "float" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 377.0, 462.465681314468384, 64.88550066947937, 36.0 ],
+					"patching_rect" : [ 377.0, 462.465681314468384, 60.0, 36.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 118.770833075046539, 13.729166448116302, 45.0, 36.0 ],
+					"presentation_rect" : [ 88.622753381729126, 20.729166448116302, 42.0, 36.0 ],
 					"saved_attribute_attributes" : 					{
 						"activedialcolor" : 						{
 							"expression" : ""
@@ -193,7 +193,7 @@
 							"parameter_initial" : [ 3 ],
 							"parameter_initial_enable" : 1,
 							"parameter_linknames" : 1,
-							"parameter_longname" : "periodic[7]",
+							"parameter_longname" : "periodic",
 							"parameter_mmax" : 8,
 							"parameter_modmode" : 0,
 							"parameter_shortname" : "periodic",
@@ -219,7 +219,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 169.0, 364.465681314468384, 100.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 6.770833075046539, 27.729166448116302, 100.0, 22.0 ]
+					"presentation_rect" : [ 6.770833075046539, 27.729166448116302, 79.04191517829895, 22.0 ]
 				}
 
 			}
