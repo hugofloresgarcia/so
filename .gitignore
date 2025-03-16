@@ -1,5 +1,5 @@
 .gradio
 .DS_Store
 scratch/
-audio/*
+*.wav
 icmc 2025/

@@ -88,8 +88,9 @@ class GradioOSCClient:
     def __init__(self, 
         ip: str,
         s_port: int, r_port: int,
-        vampnet_url: str = None,
-        s2s_url: str = None,
+        vampnet_url: str = None, # url for vampnet
+        s2s_urls: str = None, # urls for sketch2sound (multiple for parallel processing)
+        s2s_vim_url: str = None, # for sketch2sound old version (good at vocal imitations, (vims))
     ):
         self.osc_manager = OSCManager(
             ip=ip, s_port=s_port, r_port=r_port, 
@@ -99,13 +100,21 @@ class GradioOSCClient:
         self.clients = {}
         if vampnet_url is not None:
             self.clients["vampnet"] = Client(src=vampnet_url, download_files=DOWNLOADS_DIR)
-        if s2s_url is not None:
-            self.clients["s2s"] = Client(src=s2s_url, download_files=DOWNLOADS_DIR)
+        if s2s_urls is not None:
+            # self.clients["s2s"] = Client(src=s2s_url, download_files=DOWNLOADS_DIR)
+            for i, s2s_url in enumerate(s2s_urls):
+                if s2s_url is not None:
+                    self.clients[f"s2s_{i}"] = Client(src=s2s_url, download_files=DOWNLOADS_DIR)
+        if s2s_vim_url is not None:
+            self.clients["s2s_vim"] = Client(src=s2s_vim_url, download_files=DOWNLOADS_DIR)
+        
         assert len(self.clients) > 0, "At least one client must be specified!"
 
         self.batch_size = 2# TODO: automatically get batch size from client. 
 
         self.osc_manager.log("hello from gradio client!")
+
+        self.inf_idx = 0
 
 
     def param_changed(self, param_name, new_value):
@@ -198,7 +207,7 @@ class GradioOSCClient:
         self.osc_manager.log(f"query {query_id} has been processed")
         self.osc_manager.client.send_message("/process-result", [query_id] + audio_files)
 
-    
+   
     def process(self, address: str, *args):
         query_id = args[0]
         client_type = args[1]
@@ -214,7 +223,7 @@ class GradioOSCClient:
             raise ValueError(f"Unknown client type {client_type}")
         
     def process_s2s(self, address: str, *args):
-        client = self.clients["s2s"]
+        # client = self.clients["s2s"]
 
         if address != "/process":
             raise ValueError(f"Unknown address {address}")
@@ -254,7 +263,35 @@ class GradioOSCClient:
             return
 
         
-        params = {  
+        timer.tick(f"predict-{query_id}")
+        # NEW API
+        if use_control and "s2s_vim" in self.clients:
+            client = self.clients["s2s_vim"]
+            job = client.submit(
+                data=handle_file(audio_path),
+                param_1=-20, # comp threshold
+                param_2=1, # comp ratio
+                param_3=seed, # random seed
+                param_4=text_prompt, # text prompt
+                param_5=5, # text guid
+                param_6=1, # ctrl guid
+                param_7=-1,  # t_low
+                param_8=1, # t_high
+                param_9=15, # median filt
+                param_10=True, # use centroid
+                param_11=True, # use pitch
+                param_12=True, # use ldns
+                param_13=0, # transpose (semis)
+                param_14=0, # pitch shift semis
+                param_15=0, # pitchiness ofset
+                param_16=0, # gain db
+                param_17=100, # num steps
+                api_name="/generate"
+            )
+        else: 
+            client = self.clients[f"s2s_{self.inf_idx % len(self.clients)}"]
+            self.inf_idx += 1
+            params = {  
                     'control_guidance_scale': 1.0,
                     'guidance_scale': guidance_scale,
                     'logsnr_max': 5.0,
@@ -264,20 +301,17 @@ class GradioOSCClient:
                     'rho': 7.0,
                     'sampler': 'dpmpp-2m-sde',
                     'schedule': 'karras'
-        }
-
-        timer.tick(f"predict-{query_id}")
-        # NEW API
-        job = client.submit(
-                text_prompt=text_prompt,
-                control_audio=handle_file(audio_path) if use_control else None,
-                seed=seed,
-                median_filter_length=median_filter_length,
-                normalize_db=-16,
-                duration=looplength / 1000.,
-                params_str=json.dumps(params),
-                api_name="/generate_with_params"
-        )
+            }
+            job = client.submit(
+                    text_prompt=text_prompt,
+                    control_audio=handle_file(audio_path) if use_control else None,
+                    seed=seed,
+                    median_filter_length=median_filter_length,
+                    normalize_db=-16,
+                    duration=looplength / 1000.,
+                    params_str=json.dumps(params),
+                    api_name="/generate_with_params"
+            )
 
         while not job.done():
             time.sleep(0.1)
@@ -314,20 +348,27 @@ class GradioOSCClient:
         self.osc_manager.log(f"query {query_id} has been processed")
         self.osc_manager.client.send_message("/process-result", [query_id] + audio_files)
 
-
-# def create_param_manager():
-#     pm = ParamManager()
-#     # text prompt
-#     return pm
+        # schedule to delete the file after 30 seconds
+        time.sleep(30)
+        print("deleting files from query", query_id)
+        for audio_file in audio_files:
+            clear_file(audio_file)
+        # import shutil
+        print(str(Path(audio_files[0]).parent))
+        shutil.rmtree(str(Path(audio_files[0]).parent))
 
 
 def gradio_main(
     s2s_url: str = None, 
+    s2s_url_2: str = None,
+    s2s_vim_url: str = None,
     vampnet_url: str = None
 ):
+    s2s_urls = [s2s_url, s2s_url_2]
     system = GradioOSCClient(
         vampnet_url=vampnet_url,
-        s2s_url=s2s_url,
+        s2s_urls=s2s_urls,
+        s2s_vim_url=s2s_vim_url,
         ip="127.0.0.1", s_port=8003, r_port=8001,
     )
 
@@ -345,3 +386,4 @@ if __name__ == "__main__":
     except Exception as e:
         import shutil
         shutil.rmtree(DOWNLOADS_DIR, ignore_errors=True)
+        raise e
