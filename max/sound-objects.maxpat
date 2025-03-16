@@ -721,7 +721,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ -0.018986731767654, 368.874202966690063, 20.0, 118.0 ],
 					"size" : 4,
-					"value" : 2
+					"value" : 1
 				}
 
 			}
@@ -2639,7 +2639,6 @@
 					"clickthrough" : 0,
 					"enablehscroll" : 0,
 					"enablevscroll" : 0,
-					"hidden" : 1,
 					"id" : "obj-23",
 					"lockeddragscroll" : 0,
 					"lockedsize" : 0,
