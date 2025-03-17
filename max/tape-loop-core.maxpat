@@ -4829,7 +4829,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 3909.67646598815918, 855.0, 62.0, 22.0 ],
-					"text" : "3386-loop"
+					"text" : "#0-loop"
 				}
 
 			}
@@ -6054,7 +6054,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 5488.0, 1865.5, 92.0, 22.0 ],
-					"text" : "3386-dreams"
+					"text" : "#0-dreams"
 				}
 
 			}
@@ -6699,7 +6699,7 @@
 				"box" : 				{
 					"comment" : "",
 					"id" : "obj-78",
-					"index" : 1,
+					"index" : 0,
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
@@ -7032,7 +7032,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 5420.0, 1865.5, 62.0, 22.0 ],
-					"text" : "3386-loop"
+					"text" : "#0-loop"
 				}
 
 			}
@@ -7305,7 +7305,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 5432.215001463890076, 4055.704874455928802, 63.0, 22.0 ],
-					"text" : "3386-buf1"
+					"text" : "#0-buf1"
 				}
 
 			}
@@ -8694,7 +8694,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
-					"outlettype" : [ "", "int" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 2301.352931976318359, 499.0, 51.0, 22.0 ],
 					"text" : "t s #0"
 				}
@@ -9204,7 +9204,7 @@
 				"box" : 				{
 					"comment" : "signal in, messages in",
 					"id" : "obj-153",
-					"index" : 1,
+					"index" : 0,
 					"maxclass" : "inlet",
 					"numinlets" : 0,
 					"numoutlets" : 1,
@@ -10850,7 +10850,7 @@
 				"box" : 				{
 					"comment" : "",
 					"id" : "obj-57",
-					"index" : 2,
+					"index" : 0,
 					"maxclass" : "outlet",
 					"numinlets" : 1,
 					"numoutlets" : 0,
@@ -11197,7 +11197,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 973.92646598815918, 1148.0, 50.0, 22.0 ],
-					"text" : "3386"
+					"text" : "#0"
 				}
 
 			}
@@ -11292,7 +11292,7 @@
 				"box" : 				{
 					"comment" : "groove sync signal in",
 					"id" : "obj-2",
-					"index" : 2,
+					"index" : 0,
 					"maxclass" : "inlet",
 					"numinlets" : 0,
 					"numoutlets" : 1,
@@ -11742,7 +11742,7 @@
 ,
 						"valueof" : 						{
 							"parameter_linknames" : 1,
-							"parameter_longname" : "gain[1]",
+							"parameter_longname" : "gain[4]",
 							"parameter_mmax" : 30.0,
 							"parameter_mmin" : -70.0,
 							"parameter_modmode" : 0,
@@ -12664,7 +12664,7 @@
 							"parameter_initial" : [ 1.0 ],
 							"parameter_initial_enable" : 1,
 							"parameter_linknames" : 1,
-							"parameter_longname" : "dry/wet[8]",
+							"parameter_longname" : "morph",
 							"parameter_mmax" : 1.0,
 							"parameter_modmode" : 0,
 							"parameter_shortname" : "dry/wet",
@@ -12702,7 +12702,7 @@
 							"parameter_initial" : [ 0.0 ],
 							"parameter_initial_enable" : 1,
 							"parameter_linknames" : 1,
-							"parameter_longname" : "level[1]",
+							"parameter_longname" : "level[8]",
 							"parameter_mmax" : 6.0,
 							"parameter_mmin" : -70.0,
 							"parameter_modmode" : 0,
@@ -12796,7 +12796,7 @@
 					"numinlets" : 0,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 3180.093127012252808, 855.0, 125.0, 22.0 ],
+					"patching_rect" : [ 3180.093127012252808, 843.0, 125.0, 22.0 ],
 					"text" : "r #0-looplength_ms"
 				}
 
@@ -12847,7 +12847,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 3829.67646598815918, 619.0, 79.0, 22.0 ],
-					"text" : "3386-loop"
+					"text" : "#0-loop"
 				}
 
 			}
@@ -12886,7 +12886,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 4593.67646598815918, 663.0, 79.0, 22.0 ],
-					"text" : "3386-dreams"
+					"text" : "#0-dreams"
 				}
 
 			}
@@ -17152,6 +17152,80 @@
 
 			}
  ],
+		"parameters" : 		{
+			"obj-1124" : [ "morph", "dry/wet", 0 ],
+			"obj-1125" : [ "level[8]", "level", 0 ],
+			"obj-1128" : [ "gain[4]", "gain", 0 ],
+			"obj-1140" : [ "overdub", "overdub", 0 ],
+			"obj-117" : [ "live.drop", "live.drop", 0 ],
+			"obj-1230" : [ "speed[2]", "speed+", 0 ],
+			"obj-171" : [ "toggle[2]", "toggle[30]", 0 ],
+			"obj-295" : [ "button[1]", "button[1]", 0 ],
+			"obj-316" : [ "toggle[3]", "toggle[3]", 0 ],
+			"obj-341" : [ "toggle[20]", "toggle[20]", 0 ],
+			"obj-406::obj-7" : [ "number[1]", "number[1]", 0 ],
+			"obj-424::obj-347" : [ "periodic", "periodic", 0 ],
+			"obj-424::obj-349" : [ "drop", "drop", 0 ],
+			"obj-54" : [ "lpf", "lpf", 0 ],
+			"obj-55" : [ "tapelength", "length", 0 ],
+			"obj-581" : [ "speed", "speed", 0 ],
+			"obj-625" : [ "stretch[8]", "stretch", 0 ],
+			"obj-76" : [ "hpf", "hpf", 0 ],
+			"obj-91::obj-156" : [ "live.gain~[26]", "live.gain~", 0 ],
+			"obj-91::obj-162" : [ "live.gain~[25]", "live.gain~", 0 ],
+			"parameterbanks" : 			{
+				"0" : 				{
+					"index" : 0,
+					"name" : "",
+					"parameters" : [ "-", "-", "-", "-", "-", "-", "-", "-" ]
+				}
+
+			}
+,
+			"inherited_shortname" : 1
+		}
+,
+		"dependency_cache" : [ 			{
+				"name" : "choose_from_list.js",
+				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects/max",
+				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "fluid.onsetslice~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "paths.js",
+				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects/max",
+				"patcherrelativepath" : ".",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "randrange.maxpat",
+				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects/max",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "s2s-ui.maxpat",
+				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects/max",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "vampnet-ui.maxpat",
+				"bootpath" : "~/projects/music/cleat 03-2025/unsound-objects/max",
+				"patcherrelativepath" : ".",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+ ],
+		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-370", "obj-1127" ]
 			}
